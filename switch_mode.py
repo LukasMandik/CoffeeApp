@@ -7,7 +7,12 @@ class SwitchMode:
     """
     def __init__(self, page):
         self.page = page
-        self.page.floating_action_button = ft.FloatingActionButton("+", icon="add", content=ft.Icon(ft.icons.DARK_MODE))
+        self.page.floating_action_button = ft.FloatingActionButton(
+            mini=True,
+            icon="add",
+            content=ft.Icon(ft.icons.DARK_MODE),
+
+        )
         self.page.floating_action_button.on_click = self.switch_mode
 
     def switch_mode(self, e):

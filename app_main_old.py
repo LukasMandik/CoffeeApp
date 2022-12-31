@@ -1,7 +1,5 @@
 import flet as ft
-import json
 
-from product_section import ProductSection
 
 class AppMain:
 
@@ -10,86 +8,14 @@ class AppMain:
         self.page.horizontal_alignment = 'center'
         self.page.vertical_alignment = 'center'
 
-        #top text
-
-        self.TextHeaderWelcome = ft.Text(
-            'Welcome, today is great day for coffee',
-            style=ft.TextThemeStyle.HEADLINE_LARGE,
-            text_align=ft.TextAlign.START,
-            weight=ft.FontWeight.W_100,
-            font_family="Futura"
-        )
-        self.TextContainer = ft.Container(
+        self.TextHeaderWelcome = ft.Text('Welcome', style="headlineLarge", text_align='center')
+        self.Container1 = ft.Container(
             content=self.TextHeaderWelcome,
             margin=5,
-            padding=ft.padding.all(10)
+            padding=ft.padding.all(100)
         )
 
-        # Grid product
-
-        self.all_product = ft.GridView(
-            expand=1,
-            runs_count=5,
-            max_extent=200,
-            child_aspect_ratio=1.0,
-            spacing=10,
-            run_spacing=10,
-
-        )
-        self.s = []
-        with open('data.json') as json_file:
-            self.data = json.load(json_file)
-            self.s = self.data
-
-
-
-        for x in self.s:
-            self.all_product.controls.append(
-                ft.Stack(controls=[
-                    ft.Image(
-                        width=200,
-                        height=200,
-                        src="/assets/images/" + x["image"],
-                        fit=ft.ImageFit.COVER,
-                        repeat=ft.ImageRepeat.NO_REPEAT,
-                        border_radius=ft.border_radius.all(10)
-                    ),
-                    ft.Text(
-                        value=x["name"],
-                        size=18,
-                        weight=ft.FontWeight.W_100,
-                        font_family="Futura",
-                        color=ft.colors.WHITE,
-                        text_align=ft.TextAlign.CENTER,
-                        left=10,
-                        style=ft.TextThemeStyle.HEADLINE_LARGE,
-                        # tooltip="najlepsia kava v meste"
-
-
-                    ),
-                    ft.Text(
-                        value=x["price"],
-                        size=18,
-                        weight=ft.FontWeight.W_100,
-                        font_family="Futura",
-                        color=ft.colors.WHITE,
-                        text_align=ft.TextAlign.CENTER,
-                        right=12,
-                        bottom=12,
-                        style=ft.TextThemeStyle.HEADLINE_LARGE,
-                        bgcolor=ft.colors.BLACK54,
-                    )]
-                )
-            )
-
-
-
-
-
-
-        # animacia fotiek zo spodu
-
-        self.PhotoRow = ft.Row(expand=1, wrap=False, scroll=ft.ScrollMode.ADAPTIVE,run_spacing=10, spacing=10)
+        self.PhotoRow = ft.Row(expand=1, wrap=False, scroll=ft.ScrollMode.ADAPTIVE,run_spacing=300, spacing=10)
         self.photo_img = ["/assets/images/_DSC5424.jpg",
                           "/assets/images/_DSC5444.jpg",
                           "/assets/images/_DSC5569.jpg",
@@ -105,86 +31,70 @@ class AppMain:
                     repeat=ft.ImageRepeat.NO_REPEAT,
                     border_radius=ft.border_radius.all(10),
 
-
                 )
 
 
             )
 
-        self.photo_row_container = ft.Container(self.PhotoRow,bgcolor=ft.colors.BLACK26,)
-
-        self.animate_container = ft.Container(
-            self.photo_row_container,
+        self.Container4 = ft.Container(self.PhotoRow)
+        self.c = ft.Container(
+            self.Container4,
             width=320,
             height=420,
-            bgcolor=ft.colors.BLACK26,
+            # bgcolor="black",
             padding=10,
             border_radius=10,
             offset=ft.transform.Offset(0, 3),
             animate_offset=ft.animation.Animation(700),
+
         )
 
         def animate(e):
-            self.animate_container.offset = ft.transform.Offset(0, -0.3)
-            self.animate_container.update()
+            self.c.offset = ft.transform.Offset(0, -0.3)
+            self.c.update()
 
 
-        #down product menu
 
         self.Btn1 = ft.TextButton(
             "Coffee",
             icon=ft.icons.COFFEE,
-            style=ft.ButtonStyle(
-                shape=ft.RoundedRectangleBorder(radius=10),
-                color=ft.colors.BLACK54,
-                overlay_color=ft.colors.BLACK12
-            )
+            # icon_color=ft.colors.BLACK87,
+            style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=10))
         )
+        self.Btn2 = ft.TextButton("Drink", icon=ft.icons.LOCAL_DRINK,
+                                  style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=10))
+                                  )
+        self.Btn3 = ft.TextButton("Cake", icon=ft.icons.CAKE,
+                                  style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=10)))
         self.Btn1.on_click = self.next_page
-
-        self.Btn2 = ft.TextButton(
-            "Drink",
-            icon=ft.icons.LOCAL_DRINK,
-            style=ft.ButtonStyle(
-                shape=ft.RoundedRectangleBorder(radius=10),
-                color=ft.colors.BLACK54,
-                overlay_color=ft.colors.BLACK12
-            )
-        )
         self.Btn2.on_click = animate
+        # self.Container2 = ft.Container(content=self.Btn1, margin=10,
+        #             padding=10,
+        #             alignment=ft.alignment.bottom_center,
+        #             bgcolor=ft.colors.CYAN_200,
+        #             width=150,
+        #             height=150,
+        #             border_radius=10,
+        #                                border=ft.border.all(3, ft.colors.BLACK26)
+        #
+        #             )
 
-        self.Btn3 = ft.TextButton(
-            "Cake",
-            icon=ft.icons.CAKE,
-            style=ft.ButtonStyle(
-                shape=ft.RoundedRectangleBorder(radius=10),
-                color=ft.colors.BLACK54,
-                overlay_color=ft.colors.BLACK12
-            )
-        )
-        # self.Btn3.on_click =
 
-        self.row_down_menu = ft.Row([
+
+        self.r = ft.Row([
             ft.Container(expand=True,content=self.Btn1),
             ft.Container(expand=True,content=self.Btn2),
             ft.Container(expand=True, content=self.Btn3) #border_radius=2, border=ft.border.all(0.2, ft.colors.BLACK26))
         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN, aspect_ratio=10)
-        self.down_menu_container = ft.Container(
-            self.row_down_menu,
-            # height=80,
-
-
-            # bgcolor=ft.colors.BLACK26,
-            # border_radius=10
-        )
-        self.WidgetList =[self.TextContainer, self.all_product, self.down_menu_container]
+        self.Container3 = ft.Container(self.r)
+        self.WidgetList =[self.Container1, self.c, self.Container3]
         for i in self.WidgetList:
             self.page.add(i)
         self.page.update()
 
     def next_page(self, event):
         """
-        go to next page
+        go to registration page
         """
         for i in self.WidgetList:
             self.page.controls.pop()
