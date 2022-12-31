@@ -15,6 +15,8 @@ def main(page: ft.Page):
     page.window_width = 414
     page.window_height = 736
     page.window_top = 0
+    page.window_title_bar_hidden = True
+    page.window_title_bar_buttons_hidden = True
     # page.window_max_height = 1200
     # page.window_max_width = 560
     # page.bgcolor = "#CDD6D8"
