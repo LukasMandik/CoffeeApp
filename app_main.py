@@ -8,33 +8,89 @@ class AppMain:
     def __init__(self, page):
         self.page = page
         self.page.horizontal_alignment = 'center'
-        self.page.vertical_alignment = 'center'
+        self.page.vertical_alignment = ft.MainAxisAlignment.SPACE_BETWEEN
+
+        #top menu
+
+        self.up_main_menu = ft.AppBar(
+            bgcolor=ft.colors.BLACK12,
+            center_title=True,
+            toolbar_height=80,
+            leading=ft.IconButton(
+                icon=ft.icons.MENU,
+                icon_color="white",
+                icon_size=40,
+
+            ),
+            title=ft.Text(
+                "COFFEEBAR",
+                size=40,
+                color="white",
+                weight='w100',
+                font_family="Futura",
+            ),
+            actions=[
+                ft.IconButton(
+                    icon=ft.icons.SHOPPING_BAG,
+                    icon_color="white",
+                    icon_size=40,
+                ),
+            ]
+    )
+
+        self.up_menu_container = ft.Container(
+
+            content=self.up_main_menu,
+            height=100,
+            # bgcolor=ft.colors.BLACK12
+        )
+
+
 
         #top text
 
         self.TextHeaderWelcome = ft.Text(
-            'Welcome, today is great day for coffee',
+            'WELCOME,\nToday is great day for coffee',
             style=ft.TextThemeStyle.HEADLINE_LARGE,
-            text_align=ft.TextAlign.START,
+            text_align=ft.TextAlign.LEFT,
             weight=ft.FontWeight.W_100,
-            font_family="Futura"
+            font_family="Futura",
+            size=20,
+
         )
         self.TextContainer = ft.Container(
-            content=self.TextHeaderWelcome,
-            margin=5,
-            padding=ft.padding.all(10)
+            self.TextHeaderWelcome,
+            # margin=5,
+            # padding=ft.padding.all(10),
+            height=80,
+            width=414,
+            # bgcolor=ft.colors.BLACK12,
+            padding=10
         )
 
         # Grid product
 
+
+
         self.all_product = ft.GridView(
             expand=1,
             runs_count=5,
-            max_extent=200,
+            max_extent=190,
             child_aspect_ratio=1.0,
             spacing=10,
             run_spacing=10,
+            horizontal=True
 
+
+
+
+        )
+        self.grid_container = ft.Container(
+            self.all_product,
+            # width=600,
+            height=180,
+            # bgcolor=ft.colors.BLACK12,
+            padding=10
         )
         self.s = []
         with open('data.json') as json_file:
@@ -52,39 +108,63 @@ class AppMain:
                         src="/assets/images/" + x["image"],
                         fit=ft.ImageFit.COVER,
                         repeat=ft.ImageRepeat.NO_REPEAT,
-                        border_radius=ft.border_radius.all(10)
+                        border_radius=ft.border_radius.all(10),
+
                     ),
+                    ft.FloatingActionButton(
+                        mini=True,
+                        icon="add",
+                        content=ft.Text(
+                            value=x["price"],
+                            size=10,
+                            weight=ft.FontWeight.W_100,
+                            font_family="Futura",
+                            color=ft.colors.WHITE,
+                            text_align=ft.TextAlign.CENTER,
+                        ),
+                        right=5,
+                        bottom=5,
+                        bgcolor=ft.colors.BLACK26
+
+                    ),
+
                     ft.Text(
                         value=x["name"],
                         size=18,
                         weight=ft.FontWeight.W_100,
                         font_family="Futura",
                         color=ft.colors.WHITE,
-                        text_align=ft.TextAlign.CENTER,
-                        left=10,
+                        # text_align=ft.TextAlign.CENTER,
+                        left=5,
+                        top=3,
                         style=ft.TextThemeStyle.HEADLINE_LARGE,
+
                         # tooltip="najlepsia kava v meste"
 
 
                     ),
-                    ft.Text(
-                        value=x["price"],
-                        size=18,
-                        weight=ft.FontWeight.W_100,
-                        font_family="Futura",
-                        color=ft.colors.WHITE,
-                        text_align=ft.TextAlign.CENTER,
-                        right=12,
-                        bottom=12,
-                        style=ft.TextThemeStyle.HEADLINE_LARGE,
-                        bgcolor=ft.colors.BLACK54,
-                    )]
+                    # ft.Text(
+                    #     value=x["price"],
+                    #     size=18,
+                    #     weight=ft.FontWeight.W_100,
+                    #     font_family="Futura",
+                    #     color=ft.colors.WHITE,
+                    #     text_align=ft.TextAlign.CENTER,
+                    #     right=12,
+                    #     bottom=12,
+                    #     style=ft.TextThemeStyle.HEADLINE_LARGE,
+                    #     bgcolor=ft.colors.BLACK54,
+                    # )
+            ]
                 )
             )
 
+        # down grid
 
-
-
+        self.down_grid_container = ft.Container(
+            height=250,
+            # bgcolor=ft.colors.BLACK12
+        )
 
 
         # animacia fotiek zo spodu
@@ -134,6 +214,7 @@ class AppMain:
         self.Btn1 = ft.TextButton(
             "Coffee",
             icon=ft.icons.COFFEE,
+
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=10),
                 color=ft.colors.BLACK54,
@@ -142,6 +223,7 @@ class AppMain:
         )
         self.Btn1.on_click = self.next_page
 
+
         self.Btn2 = ft.TextButton(
             "Drink",
             icon=ft.icons.LOCAL_DRINK,
@@ -149,6 +231,7 @@ class AppMain:
                 shape=ft.RoundedRectangleBorder(radius=10),
                 color=ft.colors.BLACK54,
                 overlay_color=ft.colors.BLACK12
+
             )
         )
         self.Btn2.on_click = animate
@@ -159,9 +242,10 @@ class AppMain:
             style=ft.ButtonStyle(
                 shape=ft.RoundedRectangleBorder(radius=10),
                 color=ft.colors.BLACK54,
-                overlay_color=ft.colors.BLACK12
+                overlay_color=ft.colors.BLACK12,
             )
         )
+
         # self.Btn3.on_click =
 
         self.row_down_menu = ft.Row([
@@ -177,7 +261,15 @@ class AppMain:
             # bgcolor=ft.colors.BLACK26,
             # border_radius=10
         )
-        self.WidgetList =[self.TextContainer, self.all_product, self.down_menu_container]
+        self.WidgetList = [
+            self.up_main_menu,
+            # self.up_menu_container,
+            self.TextContainer,
+            self.grid_container,
+            self.down_grid_container,
+            self.down_menu_container,
+
+        ]
         for i in self.WidgetList:
             self.page.add(i)
         self.page.update()
@@ -220,7 +312,11 @@ class NextPage:
                     height=300,
                     fit=ft.ImageFit.COVER,
                     repeat=ft.ImageRepeat.NO_REPEAT,
-                    border_radius=ft.border_radius.all(10),))
+                    border_radius=ft.border_radius.all(10),
+                    gapless_playback=True
+
+                )
+            )
 
         self.Container3 = ft.Container(self.PhotoRow, margin=5, padding=ft.padding.only(left=30, right=30))
 

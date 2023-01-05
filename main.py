@@ -10,8 +10,8 @@ def main(page: ft.Page):
     page.title = 'COFFEE BAR'
     # page.theme = ft.theme.Theme(color_scheme_seed="indigo")
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.horizontal_alignment = 'center'
-    page.vertical_alignment = 'center'
+    # page.horizontal_alignment = 'center'
+    # page.vertical_alignment = 'center'
     page.window_width = 414
     page.window_height = 736
     page.window_top = 0
@@ -20,7 +20,8 @@ def main(page: ft.Page):
     # page.window_max_height = 1200
     # page.window_max_width = 560
     # page.bgcolor = "#CDD6D8"
-    page.padding = 10
+    page.padding = 0
+    # page.spacing = 50
     # ProductCard(page)
     AppMain(page)
     # SwitchMode(page)
